@@ -24,6 +24,7 @@ import { YAxisTicksComponent } from './y-axis-ticks.component';
         [tickValues]="ticks"
         [tickStroke]="tickStroke"
         [scale]="yScale"
+        [scaleType]="scaleType"
         [orient]="yOrient"
         [showGridLines]="showGridLines"
         [gridLineWidth]="dims.width"
@@ -49,6 +50,7 @@ import { YAxisTicksComponent } from './y-axis-ticks.component';
 })
 export class YAxisComponent implements OnChanges {
   @Input() yScale;
+  @Input() scaleType;
   @Input() dims;
   @Input() trimTicks: boolean;
   @Input() maxTickLength: number;

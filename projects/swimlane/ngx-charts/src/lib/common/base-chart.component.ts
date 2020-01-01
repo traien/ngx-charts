@@ -30,7 +30,7 @@ export class BaseChartComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() schemeType: string = 'ordinal';
   @Input() customColors: any;
   @Input() animations: boolean = true;
-
+  @Input() scaleType = 'log';
   @Output() select = new EventEmitter();
 
   width: number;

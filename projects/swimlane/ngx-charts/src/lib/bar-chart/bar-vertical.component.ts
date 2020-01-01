@@ -48,6 +48,7 @@ import { DataItem } from '../models/chart-data.model';
           ngx-charts-y-axis
           *ngIf="yAxis"
           [yScale]="yScale"
+          [scaleType]="scaleType"
           [dims]="dims"
           [showGridLines]="showGridLines"
           [showLabel]="showYAxisLabel"

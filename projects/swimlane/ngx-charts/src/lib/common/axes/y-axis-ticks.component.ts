@@ -83,6 +83,7 @@ import { roundedRect } from '../../common/shape.helper';
 })
 export class YAxisTicksComponent implements OnChanges, AfterViewInit {
   @Input() scale;
+  @Input() scaleType;
   @Input() orient;
   @Input() tickArguments = [5];
   @Input() tickValues: any[];
