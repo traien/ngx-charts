@@ -74,6 +74,7 @@ export class SeriesVerticalComponent implements OnChanges {
   @Input() series;
   @Input() xScale;
   @Input() yScale;
+  @Input() scaleType;
   @Input() colors;
   @Input() gradient: boolean;
   @Input() activeEntries: any[];
@@ -125,6 +126,15 @@ export class SeriesVerticalComponent implements OnChanges {
 
     this.bars = this.series.map((d, index) => {
       let value = d.value;
+      if (this.scaleType === 'log') {
+        const oldValue = d.value;
+        const e: any = {};
+        Object.assign(e, d);
+        e.value = Math.log10(Number(value));
+        value = e.value;
+      } else {
+
+      }
       const label = this.getLabel(d);
       const formattedLabel = formatLabel(label);
       const roundEdges = this.roundEdges;

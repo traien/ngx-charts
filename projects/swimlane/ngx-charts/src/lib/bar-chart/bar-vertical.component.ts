@@ -63,6 +63,7 @@ import { DataItem } from '../models/chart-data.model';
           ngx-charts-series-vertical
           [xScale]="xScale"
           [yScale]="yScale"
+          [scaleType]="scaleType"
           [colors]="colors"
           [series]="results"
           [dims]="dims"
@@ -130,6 +131,7 @@ export class BarVerticalComponent extends BaseChartComponent {
   yScale: any;
   xDomain: any;
   yDomain: any;
+  yDomainLog: any;
   transform: string;
   colors: ColorHelper;
   margin: any[] = [10, 20, 10, 20];
@@ -167,7 +169,11 @@ export class BarVerticalComponent extends BaseChartComponent {
       this.dims.height -= this.dataLabelMaxHeight.negative;
     }
     this.xScale = this.getXScale();
-    this.yScale = this.getYScale();
+    if (this.scaleType === 'log') {
+      this.yScale = this.getYScaleLog();
+    } else {
+      this.yScale = this.getYScale();
+    }
 
     this.setColors();
     this.legendOptions = this.getLegendOptions();
@@ -191,6 +197,14 @@ export class BarVerticalComponent extends BaseChartComponent {
       .domain(this.yDomain);
     return this.roundDomains ? scale.nice() : scale;
   }
+  getYScaleLog(): any {
+    this.yDomainLog = this.getYDomainLog();
+    const scale = scaleLinear()
+      .range([this.dims.height, 0])
+      .domain(this.yDomainLog);
+    console.log(this.yDomainLog);
+    return this.roundDomains ? scale.nice() : scale;
+  }
 
   getXDomain(): any[] {
     return this.results.map(d => d.label);
@@ -209,6 +223,34 @@ export class BarVerticalComponent extends BaseChartComponent {
       max = Math.max(max, ...this.yAxisTicks);
     }
     return [min, max];
+  }
+
+  getYDomainLog(): [number, number] {
+    const values = this.results.map(d => d.value);
+    const logvalues = this.getLogTicks(values);
+    console.log(this.getLogTicks(values));
+
+    let min = this.yScaleMin ? Math.min(this.yScaleMin, ...logvalues) : Math.min(0, ...logvalues);
+    if (this.yAxisTicks && !this.yAxisTicks.some(isNaN)) {
+      min = Math.min(min, ...this.yAxisTicks);
+    }
+
+    let max = this.yScaleMax ? Math.max(this.yScaleMax, ...logvalues) : Math.max(0, ...logvalues);
+    if (this.yAxisTicks && !this.yAxisTicks.some(isNaN)) {
+      max = Math.max(max, ...this.yAxisTicks);
+    }
+    return [min, max];
+  }
+  getLogTicks(ticks: any): any {
+    const newTicks = [];
+    for (let j = 0; j < ticks.length; j++) {
+      if (ticks[j] > 0) {
+        newTicks[j] = Math.log10(ticks[j]);
+      } else {
+        newTicks[j] = 0;
+      }
+    }
+    return newTicks;
   }
 
   onClick(data: DataItem) {

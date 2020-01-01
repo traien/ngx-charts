@@ -19,7 +19,7 @@ import { roundedRect } from '../../common/shape.helper';
   template: `
     <svg:g #ticksel>
       <svg:g *ngFor="let tick of ticks" class="tick" [attr.transform]="transform(tick)">
-        <title>{{ tickFormat(tick) }}</title>
+        <title>{{ getLogTick(tickFormat(tick)) }}</title>
         <svg:text
           stroke-width="0.01"
           [attr.dy]="dy"
@@ -28,7 +28,7 @@ import { roundedRect } from '../../common/shape.helper';
           [attr.text-anchor]="textAnchor"
           [style.font-size]="'12px'"
         >
-          {{ tickTrim(tickFormat(tick)) }}
+          {{ getLogTick(tickTrim(tickFormat(tick))) }}
         </svg:text>
       </svg:g>
     </svg:g>
@@ -162,6 +162,7 @@ export class YAxisTicksComponent implements OnChanges, AfterViewInit {
       };
     }
 
+
     this.adjustedScale = scale.bandwidth
       ? function(d) {
           return scale(d) + scale.bandwidth() * 0.5;
@@ -212,6 +213,14 @@ export class YAxisTicksComponent implements OnChanges, AfterViewInit {
       default:
     }
     setTimeout(() => this.updateDims());
+  }
+  getLogTick(tick: any): any {
+    console.log(this.scaleType);
+    if (this.scaleType === 'log') {
+      return Math.pow(10, tick);
+    } else {
+      return tick;
+    }
   }
 
   setReferencelines(): void {
