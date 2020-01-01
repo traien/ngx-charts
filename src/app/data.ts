@@ -10,14 +10,14 @@ import {
 export const single: SingleSeries = [
   {
     name: 'Germany',
-    value: 40632,
+    value: 406320,
     extra: {
       code: 'de'
     }
   },
   {
     name: 'United States',
-    value: 50000,
+    value: 500,
     extra: {
       code: 'us'
     }
@@ -38,14 +38,14 @@ export const single: SingleSeries = [
   },
   {
     name: 'Spain',
-    value: 33000,
+    value: 3300,
     extra: {
       code: 'es'
     }
   },
   {
     name: 'Italy',
-    value: 35800,
+    value: 1080000,
     extra: {
       code: 'it'
     }
