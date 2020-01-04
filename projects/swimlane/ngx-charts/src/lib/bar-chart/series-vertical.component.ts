@@ -126,8 +126,8 @@ export class SeriesVerticalComponent implements OnChanges {
 
     this.bars = this.series.map((d, index) => {
       let value = d.value;
+      const oldValue = d.value;
       if (this.scaleType === 'log') {
-        const oldValue = d.value;
         const e: any = {};
         Object.assign(e, d);
         e.value = Math.log10(Number(value));
@@ -216,7 +216,7 @@ export class SeriesVerticalComponent implements OnChanges {
         ? undefined
         : `
         <span class="tooltip-label">${escapeLabel(tooltipLabel)}</span>
-        <span class="tooltip-val">${value.toLocaleString()}</span>
+        <span class="tooltip-val">${oldValue.toLocaleString()}</span>
       `;
 
       return bar;
