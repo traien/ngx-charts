@@ -1,0 +1,28 @@
+// If we don't check whether 'window' and 'global' variables are defined,
+// code will fail in browser/node with 'variable is undefined' error.
+var root;
+if (typeof window !== 'undefined') {
+    root = window;
+}
+else if (typeof global !== 'undefined') {
+    root = global;
+}
+// tslint:disable-next-line:variable-name
+export var MouseEvent = root.MouseEvent;
+export function createMouseEvent(name, bubbles, cancelable) {
+    if (bubbles === void 0) { bubbles = false; }
+    if (cancelable === void 0) { cancelable = true; }
+    // Calling new of an event does not work correctly on IE. The following is a tested workaround
+    // See https://stackoverflow.com/questions/27176983/dispatchevent-not-working-in-ie11
+    if (typeof MouseEvent === 'function') {
+        // Sane browsers
+        return new MouseEvent(name, { bubbles: bubbles, cancelable: cancelable });
+    }
+    else {
+        // IE
+        var event_1 = document.createEvent('MouseEvent');
+        event_1.initEvent(name, bubbles, cancelable);
+        return event_1;
+    }
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZXZlbnRzLmpzIiwic291cmNlUm9vdCI6Im5nOi8vQHN3aW1sYW5lL25neC1jaGFydHMvIiwic291cmNlcyI6WyJsaWIvZXZlbnRzLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUVBLHlFQUF5RTtBQUN6RSxxRUFBcUU7QUFDckUsSUFBSSxJQUFTLENBQUM7QUFDZCxJQUFJLE9BQU8sTUFBTSxLQUFLLFdBQVcsRUFBRTtJQUNqQyxJQUFJLEdBQUcsTUFBTSxDQUFDO0NBQ2Y7S0FBTSxJQUFJLE9BQU8sTUFBTSxLQUFLLFdBQVcsRUFBRTtJQUN4QyxJQUFJLEdBQUcsTUFBTSxDQUFDO0NBQ2Y7QUFFRCx5Q0FBeUM7QUFDekMsTUFBTSxDQUFDLElBQU0sVUFBVSxHQUFHLElBQUksQ0FBQyxVQUc5QixDQUFDO0FBRUYsTUFBTSxVQUFVLGdCQUFnQixDQUFDLElBQVksRUFBRSxPQUF3QixFQUFFLFVBQTBCO0lBQXBELHdCQUFBLEVBQUEsZUFBd0I7SUFBRSwyQkFBQSxFQUFBLGlCQUEwQjtJQUNqRyw4RkFBOEY7SUFDOUYscUZBQXFGO0lBQ3JGLElBQUksT0FBTyxVQUFVLEtBQUssVUFBVSxFQUFFO1FBQ3BDLGdCQUFnQjtRQUNoQixPQUFPLElBQUksVUFBVSxDQUFDLElBQUksRUFBRSxFQUFFLE9BQU8sU0FBQSxFQUFFLFVBQVUsWUFBQSxFQUFFLENBQUMsQ0FBQztLQUN0RDtTQUFNO1FBQ0wsS0FBSztRQUNMLElBQU0sT0FBSyxHQUFHLFFBQVEsQ0FBQyxXQUFXLENBQUMsWUFBWSxDQUFDLENBQUM7UUFDakQsT0FBSyxDQUFDLFNBQVMsQ0FBQyxJQUFJLEVBQUUsT0FBTyxFQUFFLFVBQVUsQ0FBQyxDQUFDO1FBQzNDLE9BQU8sT0FBSyxDQUFDO0tBQ2Q7QUFDSCxDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiZGVjbGFyZSBsZXQgZ2xvYmFsOiBhbnk7XHJcblxyXG4vLyBJZiB3ZSBkb24ndCBjaGVjayB3aGV0aGVyICd3aW5kb3cnIGFuZCAnZ2xvYmFsJyB2YXJpYWJsZXMgYXJlIGRlZmluZWQsXHJcbi8vIGNvZGUgd2lsbCBmYWlsIGluIGJyb3dzZXIvbm9kZSB3aXRoICd2YXJpYWJsZSBpcyB1bmRlZmluZWQnIGVycm9yLlxyXG5sZXQgcm9vdDogYW55O1xyXG5pZiAodHlwZW9mIHdpbmRvdyAhPT0gJ3VuZGVmaW5lZCcpIHtcclxuICByb290ID0gd2luZG93O1xyXG59IGVsc2UgaWYgKHR5cGVvZiBnbG9iYWwgIT09ICd1bmRlZmluZWQnKSB7XHJcbiAgcm9vdCA9IGdsb2JhbDtcclxufVxyXG5cclxuLy8gdHNsaW50OmRpc2FibGUtbmV4dC1saW5lOnZhcmlhYmxlLW5hbWVcclxuZXhwb3J0IGNvbnN0IE1vdXNlRXZlbnQgPSByb290Lk1vdXNlRXZlbnQgYXMgTW91c2VFdmVudCAmIHtcclxuICBwcm90b3R5cGU/OiBNb3VzZUV2ZW50O1xyXG4gIG5ldyAodHlwZUFyZzogc3RyaW5nLCBldmVudEluaXREaWN0PzogTW91c2VFdmVudEluaXQpOiBNb3VzZUV2ZW50O1xyXG59O1xyXG5cclxuZXhwb3J0IGZ1bmN0aW9uIGNyZWF0ZU1vdXNlRXZlbnQobmFtZTogc3RyaW5nLCBidWJibGVzOiBib29sZWFuID0gZmFsc2UsIGNhbmNlbGFibGU6IGJvb2xlYW4gPSB0cnVlKTogTW91c2VFdmVudCB7XHJcbiAgLy8gQ2FsbGluZyBuZXcgb2YgYW4gZXZlbnQgZG9lcyBub3Qgd29yayBjb3JyZWN0bHkgb24gSUUuIFRoZSBmb2xsb3dpbmcgaXMgYSB0ZXN0ZWQgd29ya2Fyb3VuZFxyXG4gIC8vIFNlZSBodHRwczovL3N0YWNrb3ZlcmZsb3cuY29tL3F1ZXN0aW9ucy8yNzE3Njk4My9kaXNwYXRjaGV2ZW50LW5vdC13b3JraW5nLWluLWllMTFcclxuICBpZiAodHlwZW9mIE1vdXNlRXZlbnQgPT09ICdmdW5jdGlvbicpIHtcclxuICAgIC8vIFNhbmUgYnJvd3NlcnNcclxuICAgIHJldHVybiBuZXcgTW91c2VFdmVudChuYW1lLCB7IGJ1YmJsZXMsIGNhbmNlbGFibGUgfSk7XHJcbiAgfSBlbHNlIHtcclxuICAgIC8vIElFXHJcbiAgICBjb25zdCBldmVudCA9IGRvY3VtZW50LmNyZWF0ZUV2ZW50KCdNb3VzZUV2ZW50Jyk7XHJcbiAgICBldmVudC5pbml0RXZlbnQobmFtZSwgYnViYmxlcywgY2FuY2VsYWJsZSk7XHJcbiAgICByZXR1cm4gZXZlbnQ7XHJcbiAgfVxyXG59XHJcbiJdfQ==
