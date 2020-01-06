@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "npm run build:lib && ng build --prod",
     "build:lib": "ng build",
-    "package": "npm run build:lib",
+    "package": "npm pack ./dist/swimlane/ngx-charts",
     "ci": "npm run lint && npm run test:ci && npm run prettier:ci",
     "test": "ng test @swimlane/ngx-charts",
     "test:ci": "ng test @swimlane/ngx-charts --watch=false --progress=false --browsers=ChromeHeadlessCI",
